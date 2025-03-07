@@ -1,0 +1,54 @@
+sudo dnf install httpd -y  # Para Apache
+# o
+sudo dnf install nginx -y  # Para NGINX
+
+sudo echo "Server1" > /var/www/html/index.html  # En Server1
+# o
+sudo echo "Server2" > /var/www/html/index.html  # En Server2
+
+sudo systemctl start httpd    # Para Apache
+sudo systemctl enable httpd   # Para Apache
+# o
+sudo systemctl start nginx    # Para NGINX
+sudo systemctl enable nginx   # Para NGINX
+
+sudo dnf install keepalived -y
+
+sudo nano /etc/keepalived/keepalived.conf  # En Server1
+vrrp_instance VI_1 {
+    state MASTER
+    interface eth0  # Reemplazar con la interfaz correcta
+    virtual_router_id 51
+    priority 101
+    advert_int 1
+    virtual_ipaddress {
+        192.168.1.100  # IP virtual
+    }
+}
+
+
+sudo nano /etc/keepalived/keepalived.conf  # En Server2
+
+vrrp_instance VI_1 {
+    state BACKUP
+    interface eth0  # Reemplazar con la interfaz correcta
+    virtual_router_id 51
+    priority 100
+    advert_int 1
+    virtual_ipaddress {
+        192.168.1.100  # IP virtual
+    }
+}
+
+sudo systemctl start keepalived
+sudo systemctl enable keepalived
+sudo systemctl stop httpd   # Para Apache
+# o
+sudo systemctl stop nginx   # Para NGINX
+sudo systemctl start httpd   # Para Apache
+# o
+sudo systemctl start nginx   # Para NGINX
+sudo systemctl start httpd   # Para Apache
+# o
+sudo systemctl start nginx   # Para NGINX
+

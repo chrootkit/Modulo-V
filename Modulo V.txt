@@ -1,0 +1,22 @@
+mkdir -p ~/michelle1
+cd ~/sync_folder
+touch file{001..100}.txt
+rsync -avz ~/michelle1/usuario@servidor_remoto:/ruta/destino/
+nano ~/sync_script.sh
+#!/bin/bash
+rsync -avz ~/sync_folder/ usuario@servidor_remoto:/ruta/destino/
+chmod +x ~/sync_script.sh
+crontab -e
+* * * * * /bin/bash ~/sync_script.sh
+touch ~/michelle/nuevo_archivo.txt
+ls /ruta/destino/
+sudo nano /home/rae/Adrian2.sh
+rsync -avz /home/rae/os3/ usuario@servidor_secundario:/ruta/destino/os3/
+sudo chmod +x /home/rae/Adrian2.sh
+sudo crontab -e
+
+
+
+
+
+
